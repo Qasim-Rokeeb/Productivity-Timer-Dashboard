@@ -33,7 +33,10 @@ export default function TaskList({ tasks, setTasks }) {
           placeholder="New Task..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="input flex-1"
+          className="w-full px-4 py-2 rounded bg-white text-gray-900 
+                     dark:bg-gray-800 dark:text-white 
+                     placeholder:text-gray-500 dark:placeholder:text-gray-400 
+                     border border-gray-300 dark:border-gray-600"
         />
         <button onClick={addTask} className="btn-primary">
           Add
