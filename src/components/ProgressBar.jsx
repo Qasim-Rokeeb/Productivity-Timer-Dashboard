@@ -1,17 +1,18 @@
-// src/components/ProgressBar.jsx
 export default function ProgressBar({ value, max }) {
-  const percentage = Math.min((value / max) * 100, 100);
+  const pct = Math.min((value / max) * 100, 100);
 
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-1">Today's Progress</h2>
-      <div className="w-full bg-gray-300 dark:bg-gray-700 rounded h-4 overflow-hidden">
+    <div className="space-y-2">
+      <h2 className="font-poppins text-xl font-semibold">Today’s Progress</h2>
+      <div className="w-full h-3 rounded-full bg-white/20 dark:bg-gray-700/30 backdrop-blur-sm overflow-hidden">
         <div
-          className="bg-purple-600 h-full transition-all duration-500"
-          style={{ width: `${percentage}%` }}
-        ></div>
+          className={`h-full rounded-full bg-gradient-to-r from-emerald-400 to-green-500
+                      ${pct === 100 ? "shadow-[0_0_10px_theme('colors.emerald.400')]" : ""}
+                      transition-all duration-500 ease-out`}
+          style={{ width: `${pct}%` }}
+        />
       </div>
-      <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+      <p className="text-sm text-gray-600 dark:text-gray-300">
         {value} / {max} sessions completed
       </p>
     </div>

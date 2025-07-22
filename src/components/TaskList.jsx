@@ -1,4 +1,3 @@
-// src/components/TaskList.jsx
 import { useState } from "react";
 import { Check, Trash2 } from "lucide-react";
 
@@ -12,51 +11,64 @@ export default function TaskList({ tasks, setTasks }) {
     }
   };
 
-  const toggleTask = (index) => {
+  const toggleTask = (i) => {
     const updated = [...tasks];
-    updated[index].done = !updated[index].done;
+    updated[i].done = !updated[i].done;
     setTasks(updated);
   };
 
-  const deleteTask = (index) => {
-    const updated = [...tasks];
-    updated.splice(index, 1);
-    setTasks(updated);
-  };
+  const deleteTask = (i) => setTasks(tasks.filter((_, idx) => idx !== i));
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold">Task List</h2>
+      <h2 className="font-poppins text-xl font-semibold">Task List</h2>
+
+      {/* add */}
       <div className="flex gap-2">
         <input
           type="text"
-          placeholder="New Task..."
+          placeholder="New task…"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="w-full px-4 py-2 rounded bg-white text-gray-900 
-                     dark:bg-gray-800 dark:text-white 
-                     placeholder:text-gray-500 dark:placeholder:text-gray-400 
-                     border border-gray-300 dark:border-gray-600"
+          onKeyDown={(e) => e.key === "Enter" && addTask()}
+          className="flex-1 px-4 py-2 rounded-xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-md
+                     placeholder-gray-500 dark:placeholder-gray-400
+                     border border-transparent focus:ring-2 focus:ring-indigo-500 outline-none"
         />
-        <button onClick={addTask} className="btn-primary">
+        <button
+          onClick={addTask}
+          className="px-5 py-2 rounded-xl bg-indigo-600 text-white font-medium
+                     hover:bg-indigo-700 transition"
+        >
           Add
         </button>
       </div>
 
-      <ul className="space-y-2">
-        {tasks.map((task, index) => (
+      {/* list */}
+      <ul className="space-y-3">
+        {tasks.map((task, i) => (
           <li
-            key={index}
-            className={`flex justify-between items-center px-4 py-2 rounded border ${
-              task.done ? "bg-green-100 dark:bg-green-900 line-through" : ""
-            }`}
+            key={i}
+            className={`flex items-center justify-between p-3 rounded-xl bg-white/40 dark:bg-gray-800/40 backdrop-blur-md
+                        border border-transparent transition-all
+                        ${task.done ? "opacity-60" : ""}`}
           >
-            <span>{task.text}</span>
+            <span className={`flex-1 ${task.done ? "line-through" : ""}`}>
+              {task.text}
+            </span>
             <div className="flex gap-2">
-              <button onClick={() => toggleTask(index)} title="Toggle done">
+              <button
+                onClick={() => toggleTask(i)}
+                className="p-1.5 rounded-full hover:bg-green-200/50 dark:hover:bg-green-700/30"
+                title="Toggle done"
+              >
                 <Check className="w-5 h-5 text-green-600" />
               </button>
-              <button onClick={() => deleteTask(index)} title="Delete">
+              <button
+                onClick={() => deleteTask(i)}
+                className="p-1.5 rounded-full hover:bg-red-200/50 dark:hover:bg-red-700/30"
+                title="Delete"
+              >
                 <Trash2 className="w-5 h-5 text-red-500" />
               </button>
             </div>
